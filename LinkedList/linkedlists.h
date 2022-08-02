@@ -29,15 +29,9 @@ public:
     ~LinkedList();
 
 public:
-    /**
-     * @brief Add data to the end of the list.
-     * 
-     * @param data The data to add.
-     */
-    void Append(int data);
 
     /**
-     * @brief Add data to the beginning of the list
+     * @brief Add data to the end of the list
      * 
      * @param data The data to add
      */
@@ -51,9 +45,30 @@ public:
      */
     void InsertAt(int data, int position);
 
+    /**
+     * @brief delets the node at the given position
+     * 
+     * @param position The position to delete
+     * @return true if succcessfully deleting a node
+     * @return false if no such index exists
+     */
     bool DeleteAt(int position);
+    
+    /**
+     * @brief Delets the node with data if it exists
+     * 
+     * @param data The data to delete
+     * @return true if succcessfully deleting a node
+     * @return false if no such node is found
+     */
     bool Delete(int data);
 
+    /**
+     * @brief Get the Index Of the node containing data
+     * 
+     * @param data The data to find
+     * @return int The index of the node containing data
+     */
     int GetIndexOf(int data);
 
     /**

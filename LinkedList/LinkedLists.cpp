@@ -47,12 +47,56 @@ void LinkedList::PrintList()
     }
 }
 
-
-
-int main()
+int LinkedList::GetIndexOf(int data)
 {
-    LinkedList list; 
-    list.PrintList();
+    int index = 0;
+    Node* tmp = m_headNode;
+    while (tmp != nullptr)
+    {
+        if (tmp->data == data)
+        {
+            return index;
+        }
+        tmp = tmp->next;
+        index++;
+    }
+    return -1;
+}
 
-    return 0;
+bool LinkedList::DeleteAt(int position)
+{
+    Node* tmpNode = m_headNode;
+    int index;
+
+    if (position == 1)
+    {
+        m_headNode = tmpNode->next;
+        delete tmpNode;
+        return true;
+    }
+
+    if ((index - 2) == 0)
+    {
+        return false;
+    }
+
+    for (int i = 0; i < index - 2; i++)
+    {
+        tmpNode = tmpNode->next;
+    }
+
+    Node* prevNode = tmpNode->next;
+    tmpNode->next = prevNode->next;
+    delete tmpNode; 
+    return true;
+}
+
+bool LinkedList::Delete(int data)
+{
+    int index = GetIndexOf(data);
+    if (index == -1)
+    {
+        return false;
+    }
+    return DeleteAt(index);
 }
