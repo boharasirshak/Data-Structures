@@ -51,6 +51,11 @@ public:
      */
     void InsertAt(int data, int position);
 
+    bool DeleteAt(int position);
+    bool Delete(int data);
+
+    int GetIndexOf(int data);
+
     /**
      * @brief Prints the list
      * 
