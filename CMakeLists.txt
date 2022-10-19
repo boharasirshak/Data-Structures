@@ -7,4 +7,5 @@ include_directories(LinkedList)
 
 add_executable(Data_Structures
         LinkedList/LinkedList.cpp
-        LinkedList/LinkedList.h)
+        LinkedList/LinkedList.h main.cpp
+        )
