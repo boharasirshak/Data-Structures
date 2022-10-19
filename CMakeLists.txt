@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(LinkedList)
 
 add_executable(Data_Structures
-        LinkedList/LinkedLists.cpp
-        LinkedList/linkedlists.h)
+        LinkedList/LinkedList.cpp
+        LinkedList/LinkedList.h)
