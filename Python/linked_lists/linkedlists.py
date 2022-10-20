@@ -27,7 +27,6 @@ class LinkedList:
         
         return count
     
-    @property
     def to_list(self) -> list:
         if self._head is None:
             return []
@@ -255,10 +254,10 @@ class LinkedList:
         return self.contains(data)
     
     def __repr__(self) -> str:
-        return f"LinkedList({str(self.to_list)}"
+        return f"LinkedList({str(self.to_list())}"
     
     def __str__(self) -> str:
-        return str(self.to_list)
+        return str(self.to_list())
     
     def __iter__(self):
         self._index = 0
