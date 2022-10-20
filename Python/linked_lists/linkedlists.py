@@ -174,7 +174,7 @@ class LinkedList:
         
         raise ValueError("The element with the specified data not found")
 
-    
+        
 if __name__ == '__main__':
     ll = LinkedList()
     ll.extend_front([0,1,2,3,4,5])
