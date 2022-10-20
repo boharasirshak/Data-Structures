@@ -9,6 +9,10 @@ class Node:
 class LinkedList:
     def __init__(self) -> None:
         self._head = None
+        
+        # variables for __iter__ methods
+        self._index = 0
+        self._max = 0
 
     @property
     def size(self) -> int:
@@ -22,7 +26,20 @@ class LinkedList:
             tmp = tmp.next
         
         return count
+    
+    @property
+    def to_list(self) -> list:
+        if self._head is None:
+            return []
+
+        tmp = self._head
+        items = []
+        while tmp:
+            items.append(tmp.data)
+            tmp = tmp.next
         
+        return items
+            
     def print(self) -> None:
         if self._head is None:
             print('[]')
@@ -100,8 +117,6 @@ class LinkedList:
         if index > size:
             raise IndexError("Index more than the size of list!")
 
-        # if negative index is passed it will count from backwards
-        # similar to default lists in python
         if index < 0:
             index = size - index
         
@@ -114,7 +129,7 @@ class LinkedList:
         
         tmp.next = Node(data, tmp.next)
 
-    def pop_at(self, index: int) -> Node:
+    def remove_at(self, index: int) -> Any:
         """Removes a item at the specified 
 
         Args:
@@ -124,14 +139,12 @@ class LinkedList:
             IndexError: When the given index is more than that of the size of the list
 
         Returns:
-            Node: The Node object that was deleted
+            Any: The data at the `index` that was deleted
         """
         size = self.size - 1 
         if index > size:
             raise IndexError("Index more than the size of list!")
 
-        # if negative index is passed it will count from backwards
-        # similar to default lists in python
         if index < 0:
             index = size - index
         
@@ -143,38 +156,135 @@ class LinkedList:
             count += 1
         
         var = tmp.next.next
-        elem = tmp.next
-        elem.next = None
+        data = tmp.next.data
+        del tmp.next
         tmp.next = var
-        return elem
+        return data
     
-    def pop(self, data: Any) -> Node:
-        """Removed a element which data matches with the `data`
+    def remove(self, data: Any) -> int:
+        """Removed a element which matches with the data 
 
         Args:
-            data (Any): The data to match within the element
+            data (Any): The data to match
 
         Returns:
-            Node: Returns Node object if successfully removed
+            Any: Returns the index of the removed data
         
         Raises:
-            ValueError: When the the element with the specified data not found
+            ValueError: When the data not found in the list
         """
         tmp = self._head
+        count = 0
         
         while tmp.next:
             if tmp.next.data == data:
                 var = tmp.next.next
-                elem = tmp.next
-                elem.next = None
+                del tmp.next
                 tmp.next = var
-                return elem
+                return count
                 
             tmp = tmp.next
+            count += 1
         
-        raise ValueError("The element with the specified data not found")
+        raise ValueError("The data is not fount in the list")
 
+    def contains(self, data: Any) -> bool:
+        """Checks if  item contains with the specified `data` in the list
+
+        Args:
+            data (Any): The data to check
+
+        Returns:
+            bool: True if the data exists in the list, False otherwise
+        """
+        tmp = self._head
+        while tmp:
+            if tmp.data == data:
+                return True
+            tmp = tmp.next
+
+        return False
+    
+    def get(self, index: int) -> Any:
+        size = self.size
+        if index > size:
+            raise IndexError("Index more than the size of list!")
+
+        if index < 0:
+            index = size - index
         
+        tmp = self._head
+        count = 0
+        
+        while count < index:
+            tmp = tmp.next
+            count += 1
+        
+        return tmp.data
+        
+    def index_of(self, data: Any) -> int:
+        """Returns the index of the `data` in the list
+
+        Args:
+            data (Any): The data to search
+
+        Returns:
+            int: Returns a positive index value if successful
+                 -1 if the data is not in the list
+        """
+        tmp = self._head
+        count = 0
+        
+        while tmp:
+            if tmp.data == data:
+                return count
+            tmp = tmp.next
+            count += 1
+        
+        return -1
+    
+    def __getitem__(self, index: int) -> Node:
+        return self.get(index)
+
+    def __setitem__(self, key: int, item: Any):
+        if not isinstance(key, int):
+            raise ValueError("The index type should only be a integer")
+        self.push_at(key, item)
+
+    def __contains__(self, data: Any) -> bool:
+        return self.contains(data)
+    
+    def __repr__(self) -> str:
+        return f"LinkedList({str(self.to_list)}"
+    
+    def __str__(self) -> str:
+        return str(self.to_list)
+    
+    def __iter__(self):
+        self._index = 0
+        self._max = self.size 
+        return self
+
+    def __next__(self):
+        if self._index > self._max:
+            raise StopIteration
+        
+        self._index += 1
+        return self.get(self._index)
+    
+    # TODO: Not implemented
+    def __reversed__(self):
+        raise NotImplemented()
+    
+    def __len__(self) -> int:
+        return self.size
+
+    def __delitem__(self, index: int):
+        if not isinstance(index, int):
+            raise ValueError("The index type should only be a integer")
+        self.remove_at(index)
+    
+    
 if __name__ == '__main__':
     ll = LinkedList()
     ll.extend_front([0,1,2,3,4,5])
