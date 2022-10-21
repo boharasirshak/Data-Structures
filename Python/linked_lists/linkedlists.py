@@ -7,8 +7,11 @@ class Node:
     next: Any
 
 class LinkedList:
-    def __init__(self) -> None:
+    def __init__(self, items: List[Any] = None) -> None:
         self._head = None
+        
+        if items:
+            self.extend_back(items)
         
         # variables for __iter__ methods
         self._index = 0
@@ -82,6 +85,16 @@ class LinkedList:
         Args:
             datas (List[Any]): The python `list` to extend
         """
+        if not self._head:
+            self._head = Node(datas[0], None)
+            datas.pop(0)
+            tmp = self._head
+            for data in datas:
+                tmp.next = Node(data, None)
+                tmp = tmp.next   
+            
+            return 
+        
         tmp = self._head
         while tmp.next:
             tmp = tmp.next
@@ -102,25 +115,39 @@ class LinkedList:
         
         self._head = tmp
     
-    def push_at(self, data: Any, index: int) -> None:
+    def push_at(self, index: int, data: Any) -> None:
         """Pushes a new element to the given `index`
 
         Args:
-            data (Any): The element to push
             index (int): The index to push
+            data (Any): The element to push
 
         Raises:
             IndexError: When the given index is more than the size of the list
         """
-        size = self.size - 1 
+        size = self.size
+        
+        # CASE: index is -ve, count from reverse order
+        if index < 0:
+            index = size + index + 1
+
+        # CASE: Empty list or push at first
+        if size == 0 or index == 0:
+            self.push_front(data)
+            return
+
+        count = 0
+        tmp = self._head
+        
+        # CASE: push at the last of the list
+        if index == size:
+            self.push_back(data)
+            return
+        
+        # CASE: index is more than the size of the list
         if index > size:
             raise IndexError("Index more than the size of list!")
 
-        if index < 0:
-            index = size - index
-        
-        count = 0
-        tmp = self._head
         
         while count < index - 1:
             tmp = tmp.next
@@ -140,24 +167,29 @@ class LinkedList:
         Returns:
             Any: The data at the `index` that was deleted
         """
-        size = self.size - 1 
-        if index > size:
-            raise IndexError("Index more than the size of list!")
+        # delete at first
+        if index == 0:
+            tmp = self._head
+            self._head = self._head.next
+            return tmp.data
+
+        size = self.size
 
         if index < 0:
-            index = size - index
+            index = size + index
         
+        if index > size - 1:
+            raise IndexError("Index more than the size of list!")
+            
         tmp = self._head
-        count = 0
+        count = 1
         
-        while count < index - 1:
+        while count < index:
             tmp = tmp.next
             count += 1
         
-        var = tmp.next.next
         data = tmp.next.data
-        del tmp.next
-        tmp.next = var
+        tmp.next = tmp.next.next
         return data
     
     def remove(self, data: Any) -> int:
@@ -175,18 +207,34 @@ class LinkedList:
         tmp = self._head
         count = 0
         
+        # CASE: Deletion at first element
+        if tmp.data == data:
+            tmp.next = tmp.next.next
+            return count
+        
         while tmp.next:
             if tmp.next.data == data:
-                var = tmp.next.next
-                del tmp.next
-                tmp.next = var
-                return count
+                tmp.next = tmp.next.next
+                return count + 1
                 
             tmp = tmp.next
             count += 1
         
         raise ValueError("The data is not fount in the list")
 
+    # TODO: not implemented
+    def replace_at(self, index: int, item: Any) -> None:
+        raise NotImplemented
+
+    # TODO: not implemented
+    def replace(self, data: Any) -> None:
+        raise NotImplemented
+    
+    def clear(self) -> None:
+        """Clears all the elementss contained by the list
+        """
+        self._head = None
+    
     def contains(self, data: Any) -> bool:
         """Checks if  item contains with the specified `data` in the list
 
@@ -205,12 +253,23 @@ class LinkedList:
         return False
     
     def get(self, index: int) -> Any:
+        """Gets the element at the specified index
+
+        Args:
+            index (int): The index
+
+        Raises:
+            IndexError: When index is more than the size of the list
+
+        Returns:
+            Any: The data at the given index
+        """
         size = self.size
-        if index > size:
+        if index >= size:
             raise IndexError("Index more than the size of list!")
 
         if index < 0:
-            index = size - index
+            index = size + index
         
         tmp = self._head
         count = 0
@@ -248,27 +307,28 @@ class LinkedList:
     def __setitem__(self, key: int, item: Any):
         if not isinstance(key, int):
             raise ValueError("The index type should only be a integer")
-        self.push_at(key, item)
+        self.replace_at(key, item)
 
     def __contains__(self, data: Any) -> bool:
         return self.contains(data)
     
     def __repr__(self) -> str:
-        return f"LinkedList({str(self.to_list())}"
+        return f"LinkedList({str(self.to_list())})"
     
     def __str__(self) -> str:
         return str(self.to_list())
     
     def __iter__(self):
-        self._index = 0
+        self._index = -1
         self._max = self.size 
         return self
 
-    def __next__(self):
-        if self._index > self._max:
+    def __next__(self):        
+        self._index += 1
+        
+        if self._index >= self._max:
             raise StopIteration
         
-        self._index += 1
         return self.get(self._index)
     
     # TODO: Not implemented
@@ -285,11 +345,5 @@ class LinkedList:
     
     
 if __name__ == '__main__':
-    ll = LinkedList()
-    ll.extend_front([0,1,2,3,4,5])
-    ll.extend_back([6,7,8,9,10])
-    ll.print()
-    ll.pop_at(2)
-    ll.print()
-    ll.pop(8)
-    ll.print()
+    ll = LinkedList([1,2,3,4])
+    
