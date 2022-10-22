@@ -3,17 +3,20 @@
 #include "iostream"
 #include "stdexcept"
 
-
-Node::Node(int data, Node* next)
+Node::Node(int data, Node *next)
     : data(data), next(next) {}
 
-LinkedList::LinkedList(std::vector<int> items)
+LinkedList::LinkedList(int items[], int size)
 {
-    // for (auto &item : items)
-    // {
-    //     // self.   
-    // }
-    
+    this->ExtendFront(items, size);
+}
+
+LinkedList::LinkedList(std::vector<int> &items)
+{
+    for (auto &item : items)
+    {
+        this->ExtendFront(items);
+    }
 }
 
 int LinkedList::size()
@@ -34,18 +37,18 @@ void LinkedList::print()
     std::cout << "[ ";
     while (tmp)
     {
-        std::cout << tmp->data << " "; 
-        tmp = tmp->next;    
+        std::cout << tmp->data << " ";
+        tmp = tmp->next;
     }
     std::cout << "]" << std::endl;
 }
 
 /**
- * @brief Pushes a new entry to the back of the list  
- * 
+ * @brief Pushes a new entry to the back of the list
+ *
  * @param data The data to add
  */
-void LinkedList::PushBack(int data) 
+void LinkedList::PushBack(int data)
 {
     if (m_HeadNode == nullptr)
     {
@@ -54,15 +57,15 @@ void LinkedList::PushBack(int data)
     }
 
     auto tmp = m_HeadNode;
-    while ( tmp->next != nullptr )
+    while (tmp->next != nullptr)
         tmp = tmp->next;
 
     tmp->next = new Node(data, nullptr);
 }
 
 /**
- * @brief Pushes a new entry to the front of the list   
- * 
+ * @brief Pushes a new entry to the front of the list
+ *
  * @param data The data to push
  */
 void LinkedList::PushFront(int data)
@@ -75,29 +78,33 @@ void LinkedList::PushFront(int data)
     m_HeadNode = new Node(data, m_HeadNode);
 }
 
-//  TODO: Make it work
-// void LinkedList::ExtendBack(std::vector<int>& items)
-// {
-//     if (m_HeadNode == nullptr)
-//     {
-//         m_HeadNode = new Node(items[0], nullptr);
-//         items.erase(items.begin());
-//     }
-//     auto tmp = m_HeadNode;
-//     while (tmp->next != nullptr)
-//     {
-//         tmp = tmp->next;    
-//     }
-//     for(auto &item : items)
-//     {
-//         tmp->next = new Node(item, nullptr);
-//         tmp = tmp->next; 
-//     }
-// }
+/**
+ * @brief Appends an array of int to the back of the list
+ *
+ * @param items vector<int> of items
+ */
+void LinkedList::ExtendBack(std::vector<int> &items)
+{
+    if (m_HeadNode == nullptr)
+    {
+        m_HeadNode = new Node(items[0], nullptr);
+        items.erase(items.begin());
+    }
+    auto tmp = m_HeadNode;
+    while (tmp->next != nullptr)
+    {
+        tmp = tmp->next;
+    }
+    for (auto &item : items)
+    {
+        tmp->next = new Node(item, nullptr);
+        tmp = tmp->next;
+    }
+}
 
 /**
  * @brief Appends an array of int to the back of the list
- * 
+ *
  * @param items An array of int to push
  * @param size The size of the array
  */
@@ -116,32 +123,49 @@ void LinkedList::ExtendBack(int items[], int size)
     auto tmp = m_HeadNode;
     while (tmp->next != nullptr)
     {
-        tmp = tmp->next;    
+        tmp = tmp->next;
     }
     for (; i < size; i++)
     {
         tmp->next = new Node(items[i], nullptr);
-        tmp = tmp->next;    
+        tmp = tmp->next;
     }
 }
 
 /**
- * @brief Extends a array of int to the front of the list   
- * 
+ * @brief Extends a array of int to the front of the list
+ *
  * @param items The array of int
  * @param size The size of the array
  */
 void LinkedList::ExtendFront(int items[], int size)
 {
     auto tmp = new Node(items[0], nullptr);
-    auto var = m_HeadNode;
+    auto head = m_HeadNode;
     m_HeadNode = tmp;
     for (int i = 1; i < size; i++)
     {
         tmp->next = new Node(items[i], nullptr);
         tmp = tmp->next;
     }
-    tmp->next = var;
+    tmp->next = head;
+}
+
+/**
+ * @brief Appends an array of int to the front of the list
+ *
+ * @param items vector<int> of items
+ */
+void LinkedList::ExtendFront(std::vector<int> &items)
+{
+    auto tmp = new Node(items[0], nullptr);
+    auto head = m_HeadNode;
+    for (auto &item : items)
+    {
+        tmp->next = new Node(item, nullptr);
+        tmp = tmp->next;
+    }
+    tmp->next = head;
 }
 
 void LinkedList::PushAt(int index, int data)
@@ -153,9 +177,9 @@ void LinkedList::PushAt(int index, int data)
     {
         return this->PushBack(data);
     }
-    
+
     if (index > size - 1)
-    {   
+    {
         throw std::out_of_range("Index more than the size of the list");
     }
 
@@ -194,13 +218,13 @@ int main()
     ll.PushAt(6, 6);
     ll.print();
 
-    int items[] = {7,8,9,10};
+    int items[] = {7, 8, 9, 10};
     int size = 4;
 
     ll.ExtendBack(items, size);
     ll.print();
 
-    int items_2[] = {-5, -4,-3,-2,-1};
+    int items_2[] = {-5, -4, -3, -2, -1};
 
     ll.ExtendFront(items_2, 5);
     ll.print();
