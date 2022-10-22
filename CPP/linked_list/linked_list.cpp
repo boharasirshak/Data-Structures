@@ -320,13 +320,5 @@ int LinkedList::Remove(int data)
 
 int main()
 {
-    std::vector<int> items({1,2,3,4,5});
-    LinkedList ll(items);
-    ll.print();
-    ll.Remove(1);
-    ll.print();
-    ll.Remove(5);
-    ll.print();
-    ll.Remove(10);
-    ll.print();
+    
 }
