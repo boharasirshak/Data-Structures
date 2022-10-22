@@ -29,7 +29,7 @@ public:
     ~LinkedList() = default;
 
     int size();
-    void print();
+    void Print();
 
     void PushBack(int data);
     void PushFront(int data);
@@ -44,11 +44,13 @@ public:
     int RemoveAt(int index);
     int Remove(int data);
 
-    bool Exists(int data);
+    bool Contains(int data);
     int Get(int index);
+    int& Set(int index);
     int IndexOf(int data);
+    int& GetSet(int index);
 
-    int &operator[](int index);
+    int& operator[](int index);
 
 private:
     Node *m_HeadNode = nullptr;

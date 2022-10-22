@@ -27,7 +27,7 @@ int LinkedList::size()
     return count;
 }
 
-void LinkedList::print()
+void LinkedList::Print()
 {
     auto head = m_HeadNode;
     std::cout << "[ ";
@@ -318,7 +318,130 @@ int LinkedList::Remove(int data)
     throw std::invalid_argument("Data not found in the list");
 }
 
+/**
+ * @brief Checks the data contains in the list
+ * 
+ * @param data The data to check exists
+ * @return true If the data exists in the list, false otherwise
+ */
+bool LinkedList::Contains(int data)
+{
+    if (m_HeadNode == nullptr)
+    {
+        return false;
+    }
+
+    auto head = m_HeadNode;
+    while(head)
+    {
+        if (head->data == data)
+        {
+            return true;    
+        }    
+        head = head->next;
+    }
+    return false;
+}
+
+/**
+ * @brief Gets the item at the index position
+ * 
+ * @param index The index
+ * @return @b int The data present at the index
+ */
+int LinkedList::Get(int index)
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+    int size = this->size();
+
+    if (index == 0)
+    {
+        return m_HeadNode->data;
+    }
+
+    if (index >= size)
+    {
+        throw std::out_of_range("Index more than the size of the list");
+    }
+
+    auto head = m_HeadNode;
+    int count = 0;
+
+    while (count < index)
+    {
+        head = head->next;
+        count++;
+    }
+    return head->data;
+}
+
+// This function is a direct copy-paste of the Get() function
+// Need to find a better way to return the int&
+/**
+ * @brief Just like the Get() function, but we can assaign the value at the given index
+ * 
+ * @param index The index to get/set data
+ * @return int& The reference to the data at the position
+ * 
+ */
+int& LinkedList::Set(int index)
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+    int size = this->size();
+
+    if (index == 0)
+    {
+        return m_HeadNode->data;
+    }
+
+    if (index >= size)
+    {
+        throw std::out_of_range("Index more than the size of the list");
+    }
+
+    auto head = m_HeadNode;
+    int count = 0;
+
+    while (count < index)
+    {
+        head = head->next;
+        count++;
+    }
+    return head->data;
+}
+
+/**
+ * @brief Gets the index of the first entry that matches the `data` 
+ * 
+ * @param data The data to get the index
+ * @return int - If data is present in the list, returns its index, otherwise will returns -1
+ */
+int LinkedList::IndexOf(int data)
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+
+    int count = 0;
+    auto head = m_HeadNode;
+
+    while(head)
+    {
+        if (head->data == data)
+        {
+            return count;
+        }
+        head = head->next;
+        count++;
+    }
+
+    return -1;
+}
+
+int& LinkedList::operator[](int index)
+{
+    return this->Set(index);
+}
+
+
 int main()
 {
-    
 }
