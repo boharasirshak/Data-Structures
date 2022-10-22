@@ -39,10 +39,10 @@ public:
     void ExtendFront(std::vector<int> &items);
     void PushAt(int index, int data);
 
-    int RemoveAt(int index);
-    int Remove(int data);
     int PopFront();
     int PopBack();
+    int RemoveAt(int index);
+    int Remove(int data);
 
     bool Exists(int data);
     int Get(int index);

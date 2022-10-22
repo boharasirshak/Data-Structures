@@ -17,11 +17,11 @@ LinkedList::LinkedList(std::vector<int> &items)
 
 int LinkedList::size()
 {
-    auto tmp = m_HeadNode;
+    auto head = m_HeadNode;
     int count = 0;
-    while (tmp)
+    while (head)
     {
-        tmp = tmp->next;
+        head = head->next;
         ++count;
     }
     return count;
@@ -29,12 +29,12 @@ int LinkedList::size()
 
 void LinkedList::print()
 {
-    auto tmp = m_HeadNode;
+    auto head = m_HeadNode;
     std::cout << "[ ";
-    while (tmp)
+    while (head)
     {
-        std::cout << tmp->data << " ";
-        tmp = tmp->next;
+        std::cout << head->data << " ";
+        head = head->next;
     }
     std::cout << "]" << std::endl;
 }
@@ -52,11 +52,11 @@ void LinkedList::PushBack(int data)
         return;
     }
 
-    auto tmp = m_HeadNode;
-    while (tmp->next != nullptr)
-        tmp = tmp->next;
+    auto head = m_HeadNode;
+    while (head->next != nullptr)
+        head = head->next;
 
-    tmp->next = new Node(data, nullptr);
+    head->next = new Node(data, nullptr);
 }
 
 /**
@@ -86,15 +86,15 @@ void LinkedList::ExtendBack(std::vector<int> &items)
         m_HeadNode = new Node(items[0], nullptr);
         items.erase(items.begin());
     }
-    auto tmp = m_HeadNode;
-    while (tmp->next != nullptr)
+    auto head = m_HeadNode;
+    while (head->next != nullptr)
     {
-        tmp = tmp->next;
+        head = head->next;
     }
     for (auto &item : items)
     {
-        tmp->next = new Node(item, nullptr);
-        tmp = tmp->next;
+        head->next = new Node(item, nullptr);
+        head = head->next;
     }
 }
 
@@ -116,15 +116,15 @@ void LinkedList::ExtendBack(int items[], int size)
         i = 1;
     }
 
-    auto tmp = m_HeadNode;
-    while (tmp->next != nullptr)
+    auto head = m_HeadNode;
+    while (head->next != nullptr)
     {
-        tmp = tmp->next;
+        head = head->next;
     }
     for (; i < size; i++)
     {
-        tmp->next = new Node(items[i], nullptr);
-        tmp = tmp->next;
+        head->next = new Node(items[i], nullptr);
+        head = head->next;
     }
 }
 
@@ -166,6 +166,14 @@ void LinkedList::ExtendFront(std::vector<int> &items)
     tmp->next = head;
 }
 
+/**
+ * @brief Pushes a new entry to the specifed index
+ * 
+ * @param index The index of the list to push at
+ * @param data The data to push
+ * 
+ * @throw std::out_of_range When the index is more than the size of the list
+ */
 void LinkedList::PushAt(int index, int data)
 {
     int size = this->size();
@@ -187,43 +195,59 @@ void LinkedList::PushAt(int index, int data)
         return this->PushFront(data);
     }
 
-    auto tmp = m_HeadNode;
+    auto head = m_HeadNode;
     int count = 0;
 
     while (count < index - 1)
     {
-        tmp = tmp->next;
+        head = head->next;
         count++;
     }
-    tmp->next = new Node(data, tmp->next);
+    head->next = new Node(data, head->next);
 }
 
+/**
+ * @brief Removes and returns the first entry of the list
+ * 
+ * @return int The first entry that was removed
+ */
 int LinkedList::PopFront()
 {
     THROW_IF_EMPTY_LIST(m_HeadNode);
-    auto tmp = m_HeadNode;
-    auto data = tmp->data;
+    auto head = m_HeadNode;
+    auto data = head->data;
     m_HeadNode = m_HeadNode->next;
-    delete tmp;
+    delete head;
     return data;
 }
 
+/**
+ * @brief Removes and retuns the last entry of the list
+ * 
+ * @return int The last entry of the list which was removed
+ */
 int LinkedList::PopBack()
 {
     THROW_IF_EMPTY_LIST(m_HeadNode);
-    auto tmp = m_HeadNode;
+    auto head = m_HeadNode;
 
-    while (tmp->next->next)
+    while (head->next->next)
     {
-        tmp = tmp->next;
+        head = head->next;
     }
-    auto tail = tmp->next;
-    auto data = tmp->next->data;
+    auto tail = head->next;
+    auto data = head->next->data;
     delete tail;
-    tmp->next = nullptr;
+    head->next = nullptr;
     return data;
 }
 
+/**
+ * @brief Removes the entry at the specified index in the list
+ * 
+ * @param index The index which have to be removed
+ * @return int The removd entry
+ */
 int LinkedList::RemoveAt(int index)
 {
     int size = this->size();
@@ -242,10 +266,56 @@ int LinkedList::RemoveAt(int index)
         return this->PopBack();
     }
 
+    auto head = m_HeadNode;
     int count = 0;
 
-    
+    while (count < index - 1)
+    {
+        head = head->next;
+        count++;
+    }
+    auto entry = head->next;
+    auto data = entry->data;
+    head->next = head->next->next;
+    delete entry;
+    return data;
+}
 
+/**
+ * @brief Removes the first item that matches the data
+ * 
+ * @param data The data to remove from the list
+ * @return int The index of the rmeoved data+
+ * 
+ * @throw std::invaid_argument When the list is empty 
+ * @throw std::invaid_argument When the item is not present in the list
+ */
+int LinkedList::Remove(int data)
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+    auto head = m_HeadNode;
+    int index = 0;
+
+    // CASE: delete first item
+    if (head->data == data)
+    {
+        this->PopFront();
+        return index;
+    }
+
+    while(head->next)
+    {
+        if (head->next->data == data)
+        {
+            auto entry = head->next;
+            head->next = head->next->next;
+            delete entry;
+            return index;
+        }    
+        head = head->next;
+        index++;
+    }
+    throw std::invalid_argument("Data not found in the list");
 }
 
 int main()
@@ -253,8 +323,10 @@ int main()
     std::vector<int> items({1,2,3,4,5});
     LinkedList ll(items);
     ll.print();
-    ll.PopFront();
+    ll.Remove(1);
     ll.print();
-    ll.PopBack();
+    ll.Remove(5);
+    ll.print();
+    ll.Remove(10);
     ll.print();
 }
