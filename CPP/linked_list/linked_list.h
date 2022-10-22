@@ -31,6 +31,17 @@ public:
     void ExtendFront(std::vector<int> &items);
     void PushAt(int index, int data);
 
+    void RemoveAt(int index);
+    void Remove(int data);
+    void PopFront();
+    void PopBack();
+
+    bool Exists(int data);
+    void GetAt(int index);
+    void Get(int data);
+
+    int &operator[](int index);
+
 private:
     Node *m_HeadNode = nullptr;
 };
