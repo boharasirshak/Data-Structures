@@ -48,7 +48,6 @@ public:
     int Get(int index);
     int& Set(int index);
     int IndexOf(int data);
-    int& GetSet(int index);
 
     int& operator[](int index);
 
