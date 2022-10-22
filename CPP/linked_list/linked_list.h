@@ -45,8 +45,8 @@ public:
     int PopBack();
 
     bool Exists(int data);
-    int GetAt(int index);
-    int Get(int data);
+    int Get(int index);
+    int IndexOf(int data);
 
     int &operator[](int index);
 
