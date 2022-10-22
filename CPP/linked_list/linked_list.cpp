@@ -156,6 +156,8 @@ void LinkedList::ExtendFront(std::vector<int> &items)
 {
     auto tmp = new Node(items[0], nullptr);
     auto head = m_HeadNode;
+    m_HeadNode = tmp;
+    items.erase(items.begin());
     for (auto &item : items)
     {
         tmp->next = new Node(item, nullptr);
@@ -200,57 +202,59 @@ int LinkedList::PopFront()
 {
     THROW_IF_EMPTY_LIST(m_HeadNode);
     auto tmp = m_HeadNode;
+    auto data = tmp->data;
     m_HeadNode = m_HeadNode->next;
-    // m_HeadNode->next = m_HeadNode->next->next;
-    // int toReturn = tmp->data;
-    // delete tmp;
-    // return toReturn;
+    delete tmp;
+    return data;
+}
+
+int LinkedList::PopBack()
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+    auto tmp = m_HeadNode;
+
+    while (tmp->next->next)
+    {
+        tmp = tmp->next;
+    }
+    auto tail = tmp->next;
+    auto data = tmp->next->data;
+    delete tail;
+    tmp->next = nullptr;
+    return data;
 }
 
 int LinkedList::RemoveAt(int index)
 {
-    // int size = this->size();
+    int size = this->size();
 
-    // // CASE: Empty list
-    // if (m_HeadNode == nullptr)
-    // {
-    //     // I found no other exception for this type of problem.
-    //     throw std::invalid_argument("Empty list, fill the list first");
-    // }
+    THROW_IF_EMPTY_LIST(m_HeadNode);
 
-    // // CASE: Remove first item of the list
-    // if (index == 0)
-    // {
-    // }
+    // CASE: Remove first item of the list
+    if (index == 0)
+    {
+        return this->PopFront();
+    }
+
+    // CASE: Remove the last item
+    if (index == size - 1)
+    {
+        return this->PopBack();
+    }
+
+    int count = 0;
+
+    
+
 }
 
 int main()
 {
-    LinkedList ll;
+    std::vector<int> items({1,2,3,4,5});
+    LinkedList ll(items);
     ll.print();
     ll.PopFront();
-    // ll.PushBack(3);
-    // ll.PushBack(4);
-    // ll.PushBack(5);
-    // ll.print();
-    // ll.PushFront(2);
-    // ll.PushFront(1);
-    // ll.PushFront(0);
-    // ll.print();
-    // // std::cout << ll.size() << std::endl;
-    // ll.PushAt(6, 6);
-    // ll.print();
-    // ll.PushAt(6, 6);
-    // ll.print();
-
-    // int items[] = {7, 8, 9, 10};
-    // int size = 4;
-
-    // ll.ExtendBack(items, size);
-    // ll.print();
-
-    // int items_2[] = {-5, -4, -3, -2, -1};
-
-    // ll.ExtendFront(items_2, 5);
-    // ll.print();
+    ll.print();
+    ll.PopBack();
+    ll.print();
 }
