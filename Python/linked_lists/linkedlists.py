@@ -22,11 +22,11 @@ class LinkedList:
         if self._head is None:
             return 0
 
-        tmp = self._head
+        head = self._head
         count = 0
-        while tmp:
+        while head:
             count += 1
-            tmp = tmp.next
+            head = head.next
         
         return count
     
@@ -34,11 +34,11 @@ class LinkedList:
         if self._head is None:
             return []
 
-        tmp = self._head
+        head = self._head
         items = []
-        while tmp:
-            items.append(tmp.data)
-            tmp = tmp.next
+        while head:
+            items.append(head.data)
+            head = head.next
         
         return items
             
@@ -47,11 +47,11 @@ class LinkedList:
             print('[]')
             return 
 
-        tmp = self._head
+        head = self._head
         datas = []
-        while tmp:
-            datas.append(tmp.data)
-            tmp = tmp.next
+        while head:
+            datas.append(head.data)
+            head = head.next
         
         print(datas)
 
@@ -73,11 +73,11 @@ class LinkedList:
             self._head = Node(data, None)
             return
         
-        tmp = self._head
-        while tmp.next:
-            tmp = tmp.next            
+        head = self._head
+        while head.next:
+            head = head.next            
         
-        tmp.next = Node(data, None)
+        head.next = Node(data, None)
     
     def extend_back(self, datas: List[Any]) -> None:
         """Extends a `list` to the back of the linked list
@@ -88,20 +88,20 @@ class LinkedList:
         if not self._head:
             self._head = Node(datas[0], None)
             datas.pop(0)
-            tmp = self._head
+            head = self._head
             for data in datas:
-                tmp.next = Node(data, None)
-                tmp = tmp.next   
+                head.next = Node(data, None)
+                head = head.next   
             
             return 
         
-        tmp = self._head
-        while tmp.next:
-            tmp = tmp.next
+        head = self._head
+        while head.next:
+            head = head.next
         
         for data in datas:
-            tmp.next = Node(data, None)
-            tmp = tmp.next    
+            head.next = Node(data, None)
+            head = head.next    
     
     def extend_front(self, datas: List[Any]) -> None:
         """Extends a `list` to the front of the linked list
@@ -109,11 +109,11 @@ class LinkedList:
         Args:
             datas (List[Any]): The python `list` to extend
         """
-        tmp = self._head
+        head = self._head
         for data in reversed(datas):
-            tmp = Node(data=data, next=tmp)
+            head = Node(data=data, next=head)
         
-        self._head = tmp
+        self._head = head
     
     def push_at(self, index: int, data: Any) -> None:
         """Pushes a new element to the given `index`
@@ -137,7 +137,7 @@ class LinkedList:
             return
 
         count = 0
-        tmp = self._head
+        head = self._head
         
         # CASE: push at the last of the list
         if index == size:
@@ -150,10 +150,10 @@ class LinkedList:
 
         
         while count < index - 1:
-            tmp = tmp.next
+            head = head.next
             count += 1
         
-        tmp.next = Node(data, tmp.next)
+        head.next = Node(data, head.next)
 
     def remove_at(self, index: int) -> Any:
         """Removes a item at the specified 
@@ -169,9 +169,9 @@ class LinkedList:
         """
         # delete at first
         if index == 0:
-            tmp = self._head
+            head = self._head
             self._head = self._head.next
-            return tmp.data
+            return head.data
 
         size = self.size
 
@@ -181,15 +181,15 @@ class LinkedList:
         if index > size - 1:
             raise IndexError("Index more than the size of list!")
             
-        tmp = self._head
+        head = self._head
         count = 1
         
         while count < index:
-            tmp = tmp.next
+            head = head.next
             count += 1
         
-        data = tmp.next.data
-        tmp.next = tmp.next.next
+        data = head.next.data
+        head.next = head.next.next
         return data
     
     def remove(self, data: Any) -> int:
@@ -204,20 +204,20 @@ class LinkedList:
         Raises:
             ValueError: When the data not found in the list
         """
-        tmp = self._head
+        head = self._head
         count = 0
         
         # CASE: Deletion at first element
-        if tmp.data == data:
-            tmp.next = tmp.next.next
+        if head.data == data:
+            head.next = head.next.next
             return count
         
-        while tmp.next:
-            if tmp.next.data == data:
-                tmp.next = tmp.next.next
+        while head.next:
+            if head.next.data == data:
+                head.next = head.next.next
                 return count + 1
                 
-            tmp = tmp.next
+            head = head.next
             count += 1
         
         raise ValueError("The data is not fount in the list")
@@ -244,11 +244,11 @@ class LinkedList:
         Returns:
             bool: True if the data exists in the list, False otherwise
         """
-        tmp = self._head
-        while tmp:
-            if tmp.data == data:
+        head = self._head
+        while head:
+            if head.data == data:
                 return True
-            tmp = tmp.next
+            head = head.next
 
         return False
     
@@ -271,14 +271,14 @@ class LinkedList:
         if index < 0:
             index = size + index
         
-        tmp = self._head
+        head = self._head
         count = 0
         
         while count < index:
-            tmp = tmp.next
+            head = head.next
             count += 1
         
-        return tmp.data
+        return head.data
         
     def index_of(self, data: Any) -> int:
         """Returns the index of the `data` in the list
@@ -290,13 +290,13 @@ class LinkedList:
             int: Returns a positive index value if successful
                  -1 if the data is not in the list
         """
-        tmp = self._head
+        head = self._head
         count = 0
         
-        while tmp:
-            if tmp.data == data:
+        while head:
+            if head.data == data:
                 return count
-            tmp = tmp.next
+            head = head.next
             count += 1
         
         return -1
@@ -346,4 +346,5 @@ class LinkedList:
     
 if __name__ == '__main__':
     ll = LinkedList([1,2,3,4])
+    ll.print();
     
