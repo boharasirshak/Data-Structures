@@ -12,10 +12,7 @@ LinkedList::LinkedList(int items[], int size)
 
 LinkedList::LinkedList(std::vector<int> &items)
 {
-    for (auto &item : items)
-    {
-        this->ExtendFront(items);
-    }
+    this->ExtendFront(items);
 }
 
 int LinkedList::size()
@@ -199,32 +196,61 @@ void LinkedList::PushAt(int index, int data)
     tmp->next = new Node(data, tmp->next);
 }
 
+int LinkedList::PopFront()
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+    auto tmp = m_HeadNode;
+    m_HeadNode = m_HeadNode->next;
+    // m_HeadNode->next = m_HeadNode->next->next;
+    // int toReturn = tmp->data;
+    // delete tmp;
+    // return toReturn;
+}
+
+int LinkedList::RemoveAt(int index)
+{
+    // int size = this->size();
+
+    // // CASE: Empty list
+    // if (m_HeadNode == nullptr)
+    // {
+    //     // I found no other exception for this type of problem.
+    //     throw std::invalid_argument("Empty list, fill the list first");
+    // }
+
+    // // CASE: Remove first item of the list
+    // if (index == 0)
+    // {
+    // }
+}
+
 int main()
 {
     LinkedList ll;
     ll.print();
-    ll.PushBack(3);
-    ll.PushBack(4);
-    ll.PushBack(5);
-    ll.print();
-    ll.PushFront(2);
-    ll.PushFront(1);
-    ll.PushFront(0);
-    ll.print();
-    // std::cout << ll.size() << std::endl;
-    ll.PushAt(6, 6);
-    ll.print();
-    ll.PushAt(6, 6);
-    ll.print();
+    ll.PopFront();
+    // ll.PushBack(3);
+    // ll.PushBack(4);
+    // ll.PushBack(5);
+    // ll.print();
+    // ll.PushFront(2);
+    // ll.PushFront(1);
+    // ll.PushFront(0);
+    // ll.print();
+    // // std::cout << ll.size() << std::endl;
+    // ll.PushAt(6, 6);
+    // ll.print();
+    // ll.PushAt(6, 6);
+    // ll.print();
 
-    int items[] = {7, 8, 9, 10};
-    int size = 4;
+    // int items[] = {7, 8, 9, 10};
+    // int size = 4;
 
-    ll.ExtendBack(items, size);
-    ll.print();
+    // ll.ExtendBack(items, size);
+    // ll.print();
 
-    int items_2[] = {-5, -4, -3, -2, -1};
+    // int items_2[] = {-5, -4, -3, -2, -1};
 
-    ll.ExtendFront(items_2, 5);
-    ll.print();
+    // ll.ExtendFront(items_2, 5);
+    // ll.print();
 }

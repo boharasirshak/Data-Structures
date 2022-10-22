@@ -11,6 +11,14 @@ struct Node
     Node(int data, Node *next);
 };
 
+#define THROW_IF_EMPTY_LIST(headNode)                                       \
+    {                                                                       \
+        if (headNode == nullptr)                                            \
+        {                                                                   \
+            throw std::invalid_argument("Empty list, fill the list first"); \
+        }                                                                   \
+    }
+
 class LinkedList
 {
 
