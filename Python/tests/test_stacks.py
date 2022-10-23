@@ -20,6 +20,9 @@ def test_pop():
     with pytest.raises(IndexError) as e:
         stack.pop()
     assert str(e.value) == "Empty stack"
-
+    
     stack.push(1)
     assert stack.pop() == 1
+    with pytest.raises(IndexError) as e:
+        stack.pop()
+    assert str(e.value) == "Empty stack"
