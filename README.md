@@ -14,13 +14,9 @@ This is a list of data structures that i am currently learning.
 
 ## Goals: 
 - [X] **Linked Lists**
-  - [X] **Non Recursive Implementation**
-  - [ ] **Recursive Implementation**
+- [X] **Stacks**
 - [ ] **Doubly Linked List**
-  - [ ] **Non Recursive Implementation**
-  - [ ] **Recursive Implementation**
 - [ ] **HashMaps**
-- [ ] **Stacks**
 - [ ] **Queues**
 - [ ] **Heaps**
 - [ ] **Graphs**
