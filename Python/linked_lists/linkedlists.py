@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+from tkinter import N
 from typing import Any, List
 
 @dataclass
@@ -60,6 +61,28 @@ class LinkedList:
     def head(self):
         return self._head
 
+    def _reverse_recusrive(self, head: Node) -> Node:
+        """The actual implementation of the recusrive linked list reversal
+
+        Args:
+            head (Node): The head node
+
+        Returns:
+            Node: The reversed head node
+        """
+        if head is None or head.next is None:
+            return head
+
+        node = self._reverse_recusrive(head.next)
+        head.next.next = head
+        head.next = None
+        return node
+
+    def rreverse(self) -> None:
+        """Reverses the linked list using recursion
+        """
+        self._head = self._reverse_recusrive(self._head)
+    
     def reverse(self):
         """Reverses the linked list
         """
@@ -361,19 +384,5 @@ class LinkedList:
         self.remove_at(index)
 
 
-def hasCycle(head) -> bool:
-    curr =  head
-    
-    while curr.next:
-        tmp = curr
-        while tmp.next:
-            tmp = tmp.next
-            if tmp.next == curr:
-                return True            
-        curr = curr.next
-    
-    return False
-
 if __name__ == '__main__':
     ll = LinkedList([1,2,3,4,5])
-    print(hasCycle(ll.head))
