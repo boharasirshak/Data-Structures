@@ -60,6 +60,18 @@ class LinkedList:
     def head(self):
         return self._head
 
+    def reverse(self):
+        """Reverses the linked list
+        """
+        curr = self.head
+        prev = next = None
+        while curr:
+            next = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next
+        self._head = prev
+    
     def push_front(self, data: Any) -> None:
         """Pushes a new element to the front of the list
 
@@ -351,4 +363,6 @@ class LinkedList:
 
 if __name__ == '__main__':
     ll = LinkedList([1,2,3,4,5])
+    ll.print()
+    ll.reverse()
     ll.print()
