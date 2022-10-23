@@ -361,8 +361,19 @@ class LinkedList:
         self.remove_at(index)
 
 
+def hasCycle(head) -> bool:
+    curr =  head
+    
+    while curr.next:
+        tmp = curr
+        while tmp.next:
+            tmp = tmp.next
+            if tmp.next == curr:
+                return True            
+        curr = curr.next
+    
+    return False
+
 if __name__ == '__main__':
     ll = LinkedList([1,2,3,4,5])
-    ll.print()
-    ll.reverse()
-    ll.print()
+    print(hasCycle(ll.head))
