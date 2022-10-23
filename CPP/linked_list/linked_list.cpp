@@ -15,6 +15,12 @@ LinkedList::LinkedList(std::vector<int> &items)
     this->ExtendFront(items);
 }
 
+LinkedList::~LinkedList()
+{
+    if (m_HeadNode != nullptr)
+        this->Clear();
+}
+
 int LinkedList::size()
 {
     auto head = m_HeadNode;
@@ -37,6 +43,53 @@ void LinkedList::Print()
         head = head->next;
     }
     std::cout << "]" << std::endl;
+}
+
+/**
+ * @brief Reverses the link list using iterative method
+ */
+void LinkedList::Reverse()
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+
+    auto current = m_HeadNode;
+    Node *prev = nullptr, *next;
+
+    while (current != nullptr)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current =  next;
+    }
+    m_HeadNode = prev;
+}
+
+/**
+ * @brief Actual  implementation of the recusrive linked list reversing
+ * 
+ * @param head The head node
+ * @return Node* The reversed head node
+ */
+Node* LinkedList::ReverseRecursive(Node* head)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
+        return head;
+    }
+    auto node = ReverseRecursive(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return node;
+}
+
+/**
+ * @brief Reverses the linkedlist using recursion
+ * 
+ */
+void LinkedList::ReverseR()
+{
+    m_HeadNode = this->ReverseRecursive(m_HeadNode);
 }
 
 /**
@@ -319,6 +372,23 @@ int LinkedList::Remove(int data)
 }
 
 /**
+ * @brief Clears the link list
+ */
+void LinkedList::Clear()
+{
+    THROW_IF_EMPTY_LIST(m_HeadNode);
+    auto head = m_HeadNode;
+    m_HeadNode = nullptr;
+
+    while(head != nullptr)
+    {
+        auto tmp = head;
+        head = head->next;
+        delete tmp;
+    }
+}
+
+/**
  * @brief Checks the data contains in the list
  * 
  * @param data The data to check exists
@@ -440,7 +510,6 @@ int& LinkedList::operator[](int index)
 {
     return this->Set(index);
 }
-
 
 int main()
 {

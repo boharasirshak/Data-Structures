@@ -26,10 +26,13 @@ public:
     LinkedList() = default;
     LinkedList(std::vector<int> &items);
     LinkedList(int items[], int size);
-    ~LinkedList() = default;
+    ~LinkedList();
 
     int size();
     void Print();
+    void Reverse();
+    void ReverseR();
+    
 
     void PushBack(int data);
     void PushFront(int data);
@@ -43,6 +46,7 @@ public:
     int PopBack();
     int RemoveAt(int index);
     int Remove(int data);
+    void Clear();
 
     bool Contains(int data);
     int Get(int index);
@@ -53,4 +57,5 @@ public:
 
 private:
     Node *m_HeadNode = nullptr;
+    Node* ReverseRecursive(Node* head);
 };
