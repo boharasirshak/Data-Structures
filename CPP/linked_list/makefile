@@ -10,7 +10,4 @@ linked_list.o: linked_list.cpp
 	$(CC) -c linked_list.cpp $(FLAGS)
 
 clean:
-	rm *.o
-
-remove:
-	rm linked_list *.o 
+	rm -f *.o *.exe *.out linked_list
