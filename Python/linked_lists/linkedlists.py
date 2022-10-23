@@ -1,10 +1,11 @@
+from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, List
 
 @dataclass
 class Node:
     data: Any
-    next: Any
+    next: Node
 
 class LinkedList:
     def __init__(self, items: List[Any] = None) -> None:
@@ -54,6 +55,10 @@ class LinkedList:
             head = head.next
         
         print(datas)
+    
+    @property
+    def head(self):
+        return self._head
 
     def push_front(self, data: Any) -> None:
         """Pushes a new element to the front of the list
@@ -342,9 +347,8 @@ class LinkedList:
         if not isinstance(index, int):
             raise ValueError("The index type should only be a integer")
         self.remove_at(index)
-    
-    
+
+
 if __name__ == '__main__':
-    ll = LinkedList([1,2,3,4])
-    ll.print();
-    
+    ll = LinkedList([1,2,3,4,5])
+    ll.print()
