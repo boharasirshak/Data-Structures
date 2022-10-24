@@ -17,7 +17,6 @@ This is a list of data structures that i am currently learning.
 - [X] **Stacks**
 - [X] **Queues**
 - [ ] **HashMaps**
-- [ ] **Heaps**
 - [ ] **Graphs**
 - [ ] **Trees**
   - [ ] **Binary Tree**
