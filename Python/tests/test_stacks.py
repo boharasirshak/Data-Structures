@@ -1,5 +1,5 @@
 import pytest
-from stacks import Stack
+from stack import Stack
 
 def test_properties():
     stack = Stack()    

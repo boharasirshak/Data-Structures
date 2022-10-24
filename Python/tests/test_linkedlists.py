@@ -1,5 +1,5 @@
 import pytest
-from linked_lists import LinkedList
+from linked_list import LinkedList
 
 def test_conversion():
     ll_1 = LinkedList()
