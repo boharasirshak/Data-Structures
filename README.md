@@ -15,9 +15,8 @@ This is a list of data structures that i am currently learning.
 ## Goals: 
 - [X] **Linked Lists**
 - [X] **Stacks**
-- [ ] **Doubly Linked List**
+- [X] **Queues**
 - [ ] **HashMaps**
-- [ ] **Queues**
 - [ ] **Heaps**
 - [ ] **Graphs**
 - [ ] **Trees**
