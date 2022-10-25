@@ -11,7 +11,6 @@ class Stack:
     def is_empty(self) -> bool:
         return self._index == -1
     
-    @property
     def top(self) -> Any:
         if self.is_empty:
             return None
