@@ -1,5 +1,5 @@
-#ifndef STACKS_H_
-#define STACKS_H_
+#ifndef STACK_H_
+#define STACK_H_
 #endif
 
 #include "vector"
