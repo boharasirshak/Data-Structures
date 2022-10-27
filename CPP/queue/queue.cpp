@@ -45,7 +45,7 @@ bool Queue<T>::isEmpty()
 template <class T>
 T& Queue<T>::first()
 {
-    if (this-isEmpty())
+    if (this->isEmpty())
     {
         throw std::invalid_argument("Empty Queue");
     }
@@ -96,15 +96,5 @@ int Queue<T>::back()
 
 int main()
 {
-    Queue<int> q(10);
-    q.enqueue(10);
-    q.enqueue(20);
-    q.enqueue(30);
-    std::cout << "First: " << q.first() << std::endl;
-    std::cout << q.dequeue() << std::endl;
-    std::cout << q.dequeue() << std::endl;
-
-
-    std::cout << q.dequeue() << std::endl;
-    std::cout << q.dequeue() << std::endl;
+    Queue<int> q;
 }
