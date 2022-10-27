@@ -12,7 +12,7 @@ public:
 
     bool isFull();
     bool isEmpty();
-    T front();
+    T& first();
     void enqueue(T data);
     T dequeue();
 
@@ -22,6 +22,7 @@ private:
     int m_Front = -1;
     int m_Back = -1;
 
+    void init();
     int front();
     int back();
 };
