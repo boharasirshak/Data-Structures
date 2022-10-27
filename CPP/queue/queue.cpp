@@ -14,6 +14,9 @@ Queue<T>::Queue(int max) : m_Max(max)
     this->init();
 }
 
+/**
+ * @brief Initilizes the private Queue array with all members default value to 0
+ */
 template <class T>
 void Queue<T>::init()
 {
@@ -30,18 +33,33 @@ Queue<T>::~Queue()
     delete[] p_Queue;
 }
 
+/**
+ * @brief Checks if the queue is full or not
+ * 
+ * @return true if full, false otherwise
+ */
 template <class T>
 bool Queue<T>::isFull()
 {
     return this->back() + 1 == m_Max;
 }
 
+/**
+ * @brief Checks if the queue is empty or not
+ * 
+ * @return true if the queue is empty, false otherwise
+ */
 template <class T>
 bool Queue<T>::isEmpty()
 {
     return this->front() == this->back();
 }
 
+/**
+ * @brief Returns the first item of the queue
+ * 
+ * @return T& The read/write reference to the first item
+ */
 template <class T>
 T& Queue<T>::first()
 {
@@ -52,6 +70,11 @@ T& Queue<T>::first()
     return *(this->p_Queue + this->front()); 
 }
 
+/**
+ * @brief Adds a new item to the queue
+ * 
+ * @param data The data to add
+ */
 template <class T>
 void Queue<T>::enqueue(T data)
 {
@@ -63,6 +86,11 @@ void Queue<T>::enqueue(T data)
     this->m_Back++;
 }
 
+/**
+ * @brief Removes the first item from the queue
+ * 
+ * @return T The item that was removed
+ */
 template <class T>
 T Queue<T>::dequeue()
 {
@@ -82,12 +110,22 @@ T Queue<T>::dequeue()
     return data;
 }
 
+/**
+ * @brief The front index of the circular array
+ * 
+ * @return int The front index, obeying circular array
+ */
 template <class T>
 int Queue<T>::front()
 {
     return (this->m_Front + 1) % this->m_Max;
 }
 
+/**
+ * @brief The back index of the circular array
+ * 
+ * @return int The front index, obeying circular array
+ */
 template <class T>
 int Queue<T>::back()
 {
