@@ -3,18 +3,20 @@ from dataclasses import dataclass
 from tkinter import N
 from typing import Any, List
 
+
 @dataclass
 class Node:
     data: Any
     next: Node
 
+
 class LinkedList:
     def __init__(self, items: List[Any] = None) -> None:
         self._head = None
-        
+
         if items:
             self.extend_back(items)
-        
+
         # variables for __iter__ methods
         self._index = 0
         self._max = 0
@@ -29,9 +31,9 @@ class LinkedList:
         while head:
             count += 1
             head = head.next
-        
+
         return count
-    
+
     def to_list(self) -> list:
         if self._head is None:
             return []
@@ -41,22 +43,22 @@ class LinkedList:
         while head:
             items.append(head.data)
             head = head.next
-        
+
         return items
-            
+
     def print(self) -> None:
         if self._head is None:
-            print('[]')
-            return 
+            print("[]")
+            return
 
         head = self._head
         datas = []
         while head:
             datas.append(head.data)
             head = head.next
-        
+
         print(datas)
-    
+
     @property
     def head(self):
         return self._head
@@ -79,13 +81,11 @@ class LinkedList:
         return node
 
     def rreverse(self) -> None:
-        """Reverses the linked list using recursion
-        """
+        """Reverses the linked list using recursion"""
         self._head = self._reverse_recusrive(self._head)
-    
+
     def reverse(self):
-        """Reverses the linked list
-        """
+        """Reverses the linked list"""
         curr = self.head
         prev = next = None
         while curr:
@@ -94,7 +94,7 @@ class LinkedList:
             prev = curr
             curr = next
         self._head = prev
-    
+
     def push_front(self, data: Any) -> None:
         """Pushes a new element to the front of the list
 
@@ -102,7 +102,7 @@ class LinkedList:
             data (Any): The data to push
         """
         self._head = Node(data, self._head)
-    
+
     def push_back(self, data: Any) -> None:
         """Pushes a new element to the end of the list
 
@@ -112,13 +112,13 @@ class LinkedList:
         if self._head is None:
             self._head = Node(data, None)
             return
-        
+
         head = self._head
         while head.next:
-            head = head.next            
-        
+            head = head.next
+
         head.next = Node(data, None)
-    
+
     def extend_back(self, datas: List[Any]) -> None:
         """Extends a `list` to the back of the linked list
 
@@ -131,18 +131,18 @@ class LinkedList:
             head = self._head
             for data in datas:
                 head.next = Node(data, None)
-                head = head.next   
-            
-            return 
-        
+                head = head.next
+
+            return
+
         head = self._head
         while head.next:
             head = head.next
-        
+
         for data in datas:
             head.next = Node(data, None)
-            head = head.next    
-    
+            head = head.next
+
     def extend_front(self, datas: List[Any]) -> None:
         """Extends a `list` to the front of the linked list
 
@@ -152,9 +152,9 @@ class LinkedList:
         head = self._head
         for data in reversed(datas):
             head = Node(data=data, next=head)
-        
+
         self._head = head
-    
+
     def push_at(self, index: int, data: Any) -> None:
         """Pushes a new element to the given `index`
 
@@ -166,7 +166,7 @@ class LinkedList:
             IndexError: When the given index is more than the size of the list
         """
         size = self.size
-        
+
         # CASE: index is -ve, count from reverse order
         if index < 0:
             index = size + index + 1
@@ -178,25 +178,24 @@ class LinkedList:
 
         count = 0
         head = self._head
-        
+
         # CASE: push at the last of the list
         if index == size:
             self.push_back(data)
             return
-        
+
         # CASE: index is more than the size of the list
         if index > size:
             raise IndexError("Index more than the size of list!")
 
-        
         while count < index - 1:
             head = head.next
             count += 1
-        
+
         head.next = Node(data, head.next)
 
     def remove_at(self, index: int) -> Any:
-        """Removes a item at the specified 
+        """Removes a item at the specified
 
         Args:
             index (int): The index whose element is to be removed
@@ -217,49 +216,49 @@ class LinkedList:
 
         if index < 0:
             index = size + index
-        
+
         if index > size - 1:
             raise IndexError("Index more than the size of list!")
-            
+
         head = self._head
         count = 1
-        
+
         while count < index:
             head = head.next
             count += 1
-        
+
         data = head.next.data
         head.next = head.next.next
         return data
-    
+
     def remove(self, data: Any) -> int:
-        """Removed a element which matches with the data 
+        """Removed a element which matches with the data
 
         Args:
             data (Any): The data to match
 
         Returns:
             Any: Returns the index of the removed data
-        
+
         Raises:
             ValueError: When the data not found in the list
         """
         head = self._head
         count = 0
-        
+
         # CASE: Deletion at first element
         if head.data == data:
             head.next = head.next.next
             return count
-        
+
         while head.next:
             if head.next.data == data:
                 head.next = head.next.next
                 return count + 1
-                
+
             head = head.next
             count += 1
-        
+
         raise ValueError("The data is not fount in the list")
 
     # TODO: not implemented
@@ -269,12 +268,11 @@ class LinkedList:
     # TODO: not implemented
     def replace(self, data: Any) -> None:
         raise NotImplemented
-    
+
     def clear(self) -> None:
-        """Clears all the elementss contained by the list
-        """
+        """Clears all the elementss contained by the list"""
         self._head = None
-    
+
     def contains(self, data: Any) -> bool:
         """Checks if  item contains with the specified `data` in the list
 
@@ -291,7 +289,7 @@ class LinkedList:
             head = head.next
 
         return False
-    
+
     def get(self, index: int) -> Any:
         """Gets the element at the specified index
 
@@ -310,16 +308,16 @@ class LinkedList:
 
         if index < 0:
             index = size + index
-        
+
         head = self._head
         count = 0
-        
+
         while count < index:
             head = head.next
             count += 1
-        
+
         return head.data
-        
+
     def index_of(self, data: Any) -> int:
         """Returns the index of the `data` in the list
 
@@ -332,15 +330,15 @@ class LinkedList:
         """
         head = self._head
         count = 0
-        
+
         while head:
             if head.data == data:
                 return count
             head = head.next
             count += 1
-        
+
         return -1
-    
+
     def __getitem__(self, index: int) -> Node:
         return self.get(index)
 
@@ -351,30 +349,30 @@ class LinkedList:
 
     def __contains__(self, data: Any) -> bool:
         return self.contains(data)
-    
+
     def __repr__(self) -> str:
         return f"LinkedList({str(self.to_list())})"
-    
+
     def __str__(self) -> str:
         return str(self.to_list())
-    
+
     def __iter__(self):
         self._index = -1
-        self._max = self.size 
+        self._max = self.size
         return self
 
-    def __next__(self):        
+    def __next__(self):
         self._index += 1
-        
+
         if self._index >= self._max:
             raise StopIteration
-        
+
         return self.get(self._index)
-    
+
     # TODO: Not implemented
     def __reversed__(self):
         raise NotImplemented()
-    
+
     def __len__(self) -> int:
         return self.size
 
@@ -384,5 +382,5 @@ class LinkedList:
         self.remove_at(index)
 
 
-if __name__ == '__main__':
-    ll = LinkedList([1,2,3,4,5])
+if __name__ == "__main__":
+    ll = LinkedList([1, 2, 3, 4, 5])

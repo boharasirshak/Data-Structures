@@ -60,18 +60,18 @@ void LinkedList::Reverse()
         next = current->next;
         current->next = prev;
         prev = current;
-        current =  next;
+        current = next;
     }
     m_HeadNode = prev;
 }
 
 /**
  * @brief Actual  implementation of the recusrive linked list reversing
- * 
+ *
  * @param head The head node
  * @return Node* The reversed head node
  */
-Node* LinkedList::ReverseRecursive(Node* head)
+Node *LinkedList::ReverseRecursive(Node *head)
 {
     if (head == nullptr || head->next == nullptr)
     {
@@ -85,7 +85,7 @@ Node* LinkedList::ReverseRecursive(Node* head)
 
 /**
  * @brief Reverses the linkedlist using recursion
- * 
+ *
  */
 void LinkedList::ReverseR()
 {
@@ -221,10 +221,10 @@ void LinkedList::ExtendFront(std::vector<int> &items)
 
 /**
  * @brief Pushes a new entry to the specifed index
- * 
+ *
  * @param index The index of the list to push at
  * @param data The data to push
- * 
+ *
  * @throw std::out_of_range When the index is more than the size of the list
  */
 void LinkedList::PushAt(int index, int data)
@@ -261,7 +261,7 @@ void LinkedList::PushAt(int index, int data)
 
 /**
  * @brief Removes and returns the first entry of the list
- * 
+ *
  * @return int The first entry that was removed
  */
 int LinkedList::PopFront()
@@ -276,7 +276,7 @@ int LinkedList::PopFront()
 
 /**
  * @brief Removes and retuns the last entry of the list
- * 
+ *
  * @return int The last entry of the list which was removed
  */
 int LinkedList::PopBack()
@@ -297,7 +297,7 @@ int LinkedList::PopBack()
 
 /**
  * @brief Removes the entry at the specified index in the list
- * 
+ *
  * @param index The index which have to be removed
  * @return int The removd entry
  */
@@ -336,11 +336,11 @@ int LinkedList::RemoveAt(int index)
 
 /**
  * @brief Removes the first item that matches the data
- * 
+ *
  * @param data The data to remove from the list
  * @return int The index of the rmeoved data+
- * 
- * @throw std::invaid_argument When the list is empty 
+ *
+ * @throw std::invaid_argument When the list is empty
  * @throw std::invaid_argument When the item is not present in the list
  */
 int LinkedList::Remove(int data)
@@ -356,7 +356,7 @@ int LinkedList::Remove(int data)
         return index;
     }
 
-    while(head->next)
+    while (head->next)
     {
         if (head->next->data == data)
         {
@@ -364,7 +364,7 @@ int LinkedList::Remove(int data)
             head->next = head->next->next;
             delete entry;
             return index;
-        }    
+        }
         head = head->next;
         index++;
     }
@@ -380,7 +380,7 @@ void LinkedList::Clear()
     auto head = m_HeadNode;
     m_HeadNode = nullptr;
 
-    while(head != nullptr)
+    while (head != nullptr)
     {
         auto tmp = head;
         head = head->next;
@@ -390,7 +390,7 @@ void LinkedList::Clear()
 
 /**
  * @brief Checks the data contains in the list
- * 
+ *
  * @param data The data to check exists
  * @return true If the data exists in the list, false otherwise
  */
@@ -402,12 +402,12 @@ bool LinkedList::Contains(int data)
     }
 
     auto head = m_HeadNode;
-    while(head)
+    while (head)
     {
         if (head->data == data)
         {
-            return true;    
-        }    
+            return true;
+        }
         head = head->next;
     }
     return false;
@@ -415,7 +415,7 @@ bool LinkedList::Contains(int data)
 
 /**
  * @brief Gets the item at the index position
- * 
+ *
  * @param index The index
  * @return @b int The data present at the index
  */
@@ -449,12 +449,12 @@ int LinkedList::Get(int index)
 // Need to find a better way to return the int&
 /**
  * @brief Just like the Get() function, but we can assaign the value at the given index
- * 
+ *
  * @param index The index to get/set data
  * @return int& The reference to the data at the position
- * 
+ *
  */
-int& LinkedList::Set(int index)
+int &LinkedList::Set(int index)
 {
     THROW_IF_EMPTY_LIST(m_HeadNode);
     int size = this->size();
@@ -481,8 +481,8 @@ int& LinkedList::Set(int index)
 }
 
 /**
- * @brief Gets the index of the first entry that matches the `data` 
- * 
+ * @brief Gets the index of the first entry that matches the `data`
+ *
  * @param data The data to get the index
  * @return int - If data is present in the list, returns its index, otherwise will returns -1
  */
@@ -493,7 +493,7 @@ int LinkedList::IndexOf(int data)
     int count = 0;
     auto head = m_HeadNode;
 
-    while(head)
+    while (head)
     {
         if (head->data == data)
         {
@@ -506,7 +506,7 @@ int LinkedList::IndexOf(int data)
     return -1;
 }
 
-int& LinkedList::operator[](int index)
+int &LinkedList::operator[](int index)
 {
     return this->Set(index);
 }
